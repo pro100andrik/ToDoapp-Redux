@@ -88,12 +88,15 @@ body {
 
 ul {
   padding-left: 0px;
+  margin: 0;
+  margin-bottom: 20px;
 }
 
 li {
+  cursor: pointer;
   list-style: none;
   position: relative;
-  padding: 3px;
+  padding: 8px;
   background: #f2f2f2;
   border: 1px solid lightgrey;
   border-top: 0px;
@@ -126,7 +129,12 @@ li:last-child{
   text-decoration: line-through;
 }
 
+li:hover .close-button {
+    visibility: visible;
+}
+
 .close-button {
+  visibility: hidden;
   position: absolute;
   right: 5px;
   background: none;

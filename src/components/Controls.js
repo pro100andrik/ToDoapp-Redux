@@ -1,38 +1,19 @@
 import React from 'react';
 
 class Controls extends React.Component{
-  constructor(props){
-    super(props);
-    this.handleVisibility = this.handleVisibility.bind(this);
-    this.handleRemoveCompleted = this.handleRemoveCompleted.bind(this);
-  }
 
-  countLeftItems(array) {
-    let count = 0;
-    for (let item of array){
-      if (!item.isChecked) count++;
-    }
-    return count;
-  }
-
-  handleVisibility(type){
-    this.props.handleItemsVisibility(type);
-  }
-
-  handleRemoveCompleted(){
-    this.props.handleRemoveCompleted();
-  }
 
   render(){
+    const { changeVisibility, tasksLeft, allTasksCount, removeCompleted } = this.props
     return(
       <div className='controls'>
-        <span className='items-counter'> {this.countLeftItems(this.props.taskList)} items left</span>
+        <span className='items-counter'> items left {tasksLeft}</span>
         <span className='visibility-buttons'>
-          <button onClick={() => this.handleVisibility('showAll')}>Show all</button>
-          <button onClick={() => this.handleVisibility('showActive')}>Active</button>
-          <button onClick={() => this.handleVisibility('showCompleted')}>Completed</button>
+          <button onClick={() => changeVisibility('all')}>Show all</button>
+          <button onClick={() => changeVisibility('active')}>Active</button>
+          <button onClick={() => changeVisibility('completed')}>Completed</button>
         </span>
-        <span className='remove-button'><button onClick={this.handleRemoveCompleted} className={this.props.showRemoveButton ? '' : 'hiden'}>Remove Completed</button></span>
+        <span className='remove-button'><button onClick={removeCompleted} className={allTasksCount - tasksLeft === 0 ? 'hiden' : ''}>Remove Completed</button></span>
       </div>
     )
   }

@@ -1,49 +1,40 @@
 import React from 'react';
 
-class TextArea extends React.Component{
+import PropTypes from 'prop-types'
+
+class InputArea extends React.Component{
   constructor(props){
     super(props);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.state = ({
-      text: ""
-    })
     this.inputRef = React.createRef();
   }
 
   handleChange = e => {
     if(e.code === 'Enter') return;
-      this.setState ({
-        text: e.target.value
-      })
+    this.props.changeInputText(e.target.value)
   }
 
-  handleKeyDown(e){
+  handleKeyDown = e => {
     if(e.code !== 'Enter') return;
     if(e.target.value === '') {
       alert('enter something')
       return;
-   }
-   this.setState ({
-     text: e.target.value
-   })
-   this.handleAdd();
-    e.target.value = '' ;
+    }
+    this.props.addNewTask(this.props.text)
+    this.props.changeInputText('')
   }
 
 
   handleAdd = () => {
-    if(this.state.text === "") {
+    if(this.props.text === "") {
       alert ("enter something")
       return
     }
-    this.props.handleAddItem(this.state.text);
-    this.setState ({
-      text: ""
-    })
-    this.inputRef.current.value = "";
+    this.props.addNewTask(this.props.text)
+    this.props.changeInputText('')
   }
 
   render(){
+    const { text } = this.props
     return(
       <span className='input-span'>
       <input type='text'
@@ -51,11 +42,16 @@ class TextArea extends React.Component{
         className='input-text'
         placeholder='Input you task here'
         onKeyDown={this.handleKeyDown}
-        onChange={this.handleChange}/>
+        onChange={this.handleChange}
+        value={text}/>
         <button className="add-button" onClick={this.handleAdd}> Add </button>
       </span>
     )
   }
 }
 
-export default TextArea
+export default InputArea
+
+InputArea.propTypes = {
+  text: PropTypes.string.isRequired,
+}
